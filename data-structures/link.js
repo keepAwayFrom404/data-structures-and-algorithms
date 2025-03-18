@@ -2,11 +2,11 @@ class Node {
   constructor(value) {
     this.value = value;
     this.next = null;
-    this.prevv = null;
+    this.prev = null;
   }
 }
 class MyLinkedList {
-  constructor(arr) {
+  constructor() {
     this.head = new Node();
     this.tail = new Node();
     this.head.next = this.tail;
@@ -60,17 +60,63 @@ class MyLinkedList {
     }
     return cur;
   }
-  removeLast() {}
-  removeFirst() {}
-  remove(index) {}
-  set(index, value) {}
-  get(index) {}
+  removeLast() {
+    this.checkElementIndex();
+    const temp = this.head.next;
+    this.head.next = temp.next;
+    this.head.next.prev = this.head;
+    this.size--;
+    return temp.value;
+  }
+  removeFirst() {
+    this.checkElementIndex();
+    const temp = this.tail.prev;
+    this.tail.prev = temp.prev;
+    temp.next = this.tail;
+    this.size--;
+    return temp.value;
+  }
+  remove(index) {
+    this.checkElementIndex();
+    let cur = this.head
+    for (let i = 0; i < this.size; i++) {
+      if (i === index) {
+        cur.next.pre = cur.pre;
+        cur.pre.next = cur.next;
+        return cur.value;
+      }
+      cur = cur.next;
+    }
+    this.size--;
+  }
+  set(index, value) {
+    this.checkElementIndex();
+    let cur = this.head
+    for (let i = 0; i < this.size; i++) {
+      if (i === index) {
+        return (cur.value = value);
+      }
+      cur = cur.next;
+    }
+  }
+  get(index) {
+    this.checkElementIndex();
+    let cur = this.head
+    for (let i = 0; i < this.size; i++) {
+      if (i === index) {
+        return cur.value;
+      }
+      cur = cur.next;
+    }
+  }
   checkPositionIndex(index) {
-    if (index < 0 || index > this.size) { // 新增可以为size
+    if (index < 0 || index > this.size) {
+      // 新增可以为size
       throw new Error("position out of range");
     }
   }
-  checkElementIndex(index) { // 删除不能为size
+  checkElementIndex(index) {
+    // 删除不能为size
     if (index < 0 || index >= this.size) {
       throw new Error("index out of range");
     }
@@ -78,7 +124,6 @@ class MyLinkedList {
   size() {
     return this.size;
   }
-
   isEmpty() {
     return this.size === 0;
   }
@@ -87,8 +132,8 @@ class MyLinkedList {
     let p = this.head.next;
     let str = "";
     while (p !== this.tail) {
-        str += `${p.val} <-> `;
-        p = p.next;
+      str += `${p.val} <-> `;
+      p = p.next;
     }
     console.log(str + "null\n");
   }

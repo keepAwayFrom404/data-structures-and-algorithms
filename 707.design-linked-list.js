@@ -10,19 +10,13 @@ var MyLinkedList = function () {
   this.head = null;
   this.size = 0;
 };
-MyLinkedList.prototype.checkElementIndex = function (index) {
-  if (index < 0 || index >= this.size) return -1;
-};
-MyLinkedList.prototype.checkPositionIndex = function (index) {
-  if (index < 0 || index > this.size) return -1;
-};
 /**
  *
  * @param {number} index
  * @return {number}
  */
 MyLinkedList.prototype.get = function (index) {
-  this.checkElementIndex(index)
+  if (index < 0 || index >= this.size) return -1;
   let cur = this.head;
   for (let i = 0; i < index; i++) {
     cur = cur.next;
@@ -52,7 +46,7 @@ MyLinkedList.prototype.addAtHead = function (val) {
  * @return {void}
  */
 MyLinkedList.prototype.addAtTail = function (val) {
-  if (this.size === 0) this.addAtHead(val);
+  if (this.size === 0) return this.addAtHead(val);
   const newVal = {
     next: null,
     val,
@@ -72,7 +66,7 @@ MyLinkedList.prototype.addAtTail = function (val) {
  * @return {void}
  */
 MyLinkedList.prototype.addAtIndex = function (index, val) {
-  this.checkPositionIndex(index);
+  if (index < 0 || index > this.size) return -1;
   if (index === 0) return this.addAtHead(val);
   const newVal = {
     next: null,
@@ -93,7 +87,7 @@ MyLinkedList.prototype.addAtIndex = function (index, val) {
  * @return {void}
  */
 MyLinkedList.prototype.deleteAtIndex = function (index) {
-  this.checkElementIndex(index)
+  if (index < 0 || index >= this.size) return -1;
   if(!this.head) return null
   if(index === 0) {
     const temp = this.head

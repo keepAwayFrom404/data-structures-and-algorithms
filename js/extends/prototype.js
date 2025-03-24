@@ -67,5 +67,28 @@ const child4b =  Child4(temp)
 child4.skill.push(5)
 // console.log(child4b.skill);
 
+/**
+ * 寄生组合继承：手动创建原型对象，减少new操作导致的实例与原型属性重复的问题
+ */
+function createPrototype(Sup,Sub) {
+  const obj = Object.create(Sup.prototype)
+  obj.constructor = Sub
+  Sub.prototype = obj
+}
+
+function Child5(name, ...args) {
+  this.type = 'child5'
+  this.name = name
+  Parent.call(this, ...args)
+}
+
+createPrototype(Parent, Child5)
+
+const child5 = new Child5()
+const child5b = new Child5()
+child5.skill.push(4)
+// console.log(child5);
+// console.log(child5b);
+
 
 

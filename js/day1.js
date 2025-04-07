@@ -4,15 +4,16 @@ function getRandowRangeNum() {
   return Math.floor(Math.random()*31)+2
 }
 function getArray(arr) {
+  console.log(arr);
   if(arr.length === 5) {
   return arr
   }
   // 生成2-32的随机数；判断是否重复
   let randomNum = getRandowRangeNum()
-  while(arr.includes(randomNum)) {
-    randomNum = getRandowRangeNum()
+  if(!arr.includes(randomNum)) {
+    arr.push(randomNum)
   }
-  arr.push(randomNum)
+  
   return getArray(arr)
 }
 const res = getArray([])

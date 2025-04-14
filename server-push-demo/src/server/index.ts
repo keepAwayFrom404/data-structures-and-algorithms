@@ -19,9 +19,10 @@ const io = new Server(httpServer, {
 });
 
 const endpoint = "https://api.deepseek.com/chat/completions";
+const endpoint2 = 'https://api.coze.cn/open_api/v2/chat';
 const headers = {
   "Content-Type": "application/json",
-  Authorization: `Bearer sk-291ed39115344cb5b159bd0882fa88ed`,
+  Authorization: `Bearer pat_5esaxQUKDBzra0q49o7Qr78Ll4wX6VD4y8TwauopI9sG5YthU1zAk0C2ZXHkBPIE`,
 };
 
 // WebSocket 处理
@@ -30,27 +31,29 @@ io.on("connection", (socket) => {
 
   socket.on("chat message", async (message) => {
     io.emit("chat message", message); // 广播原始消息给所有客户端
-
     const payload = {
       model: "deepseek-chat",
       messages: [
         { role: "system", content: "You are a helpful assistant." },
-        { role: "user", content: message },
+        { role: "user", content: message.text },
       ],
       stream: false,
     };
+    const payload2 = { bot_id: '7493178146314256436', user: 'cadenli', query: '你好', chat_history: [], stram: false, custom_variables: { prompt: "你是一个AI助手" }};
     const response = await fetch(endpoint, {
       method: "POST",
       headers: headers,
-      body: JSON.stringify(payload),
+      body: JSON.stringify(payload2),
     });
+    console.log(response,'response');
 
     const data = await response.json();
 
     // 生成自动回复消息
     const autoReply = {
       id: Date.now().toString(),
-      text: data.choices[0].message.content,
+      // text: data.choices[0].message.content,
+      text: data.messages[0].content,
       sender: "Server",
       timestamp: new Date().toISOString(),
     };

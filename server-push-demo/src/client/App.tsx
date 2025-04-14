@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import WebSocketDemo from './pages/WebSocketDemo';
+import WebSocketDemo from './pages/Chat';
 import SSEDemo from './pages/SSEDemo';
 import HTTP2Demo from './pages/HTTP2Demo';
 

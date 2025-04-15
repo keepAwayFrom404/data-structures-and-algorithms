@@ -39,8 +39,17 @@ io.on("connection", (socket) => {
       ],
       stream: false,
     };
-    const payload2 = { bot_id: '7493178146314256436', user: 'cadenli', query: '你好', chat_history: [], stram: false, custom_variables: { prompt: "你是一个AI助手" }};
-    const response = await fetch(endpoint, {
+    const payload2 = {
+      bot_id: '7493178146314256436',
+      user: 'cadenli',
+      query: message.text,
+      chat_history: [],
+      stram: false,
+      custom_variables: {
+          prompt: "你是一个AI助手"
+      }
+  };
+    const response = await fetch(endpoint2, {
       method: "POST",
       headers: headers,
       body: JSON.stringify(payload2),

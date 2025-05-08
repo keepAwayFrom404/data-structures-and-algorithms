@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    p {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    height: 40px;
+    background: #000;
+    border: 1px solid red;
+}
+.son {
+  width: 20px;
+  height: 20px;
+  background: pink;
+}
+/* div {
+  padding: 1px;
+} */
+ .fan {
+  width: 200px;
+  height: 200px;
+  background-color: pink;
+  margin-bottom: 20px;
+  border-bottom: 1px solid transparent;
+ }
+ .son {
+  width: 100px;
+  height: 200px;
+  background: yellow;
+  margin-bottom: 40px;
+ }
+ .sp {
+  margin-top: 20px;
+  margin-bottom: 40px;
+ }
+  </style>
+</head>
+<body>
+  <!-- 元素之间没有被非空内容、padding、border、clear分隔开，且符合几种相邻情况 -->
+  <!-- <div class="fan">
+    <div class="son"></div>
+  </div> -->
+  <div class="parent" style="margin-bottom: 20px; border-bottom: 1px solid transparent;">
+    <div class="child" style="height: 100px; margin-bottom: 40px; background: red;"></div>
+  </div>
+  <div style="background: blue; height: 50px;"></div>
+  <!-- <div class="sp"></div> -->
+  <div style="height: 100px;background: #000;"></div>
+  <!-- <p></p>
+  <p></p> -->
+</body>
+</html>

@@ -15,19 +15,41 @@
         /* 声明一个容器 */
         display: grid;
         /*  声明列的宽度  */
-        grid-template-columns: repeat(auto-fill, 200px);
+        grid-template-columns: 100px  200px  100px;
         /*  声明行间距和列间距  */
-        grid-gap: 20px;
+        /* grid-gap: 20px; */
+        grid-row-gap: 30px;
+        grid-column-gap: 10px;
         /*  声明行的高度  */
-        grid-template-rows: 100px 200px 100px;
+        grid-template-rows: 100px 200px;
+        /* grid-template-areas:
+        ". header  header"
+        "sidebar content content"; */
+        grid-auto-flow: row dense; 
+        justify-items:left;
+        align-items: stretch;
+        grid-auto-rows: 100px;
+        /* justify-content: right; */
+        /* align-content: end; */
       }
       .item {
         text-align: center;
         font-size: 200%;
         color: #fff;
       }
+      /* .one,.three,.seven,.four,.eight,.nine {
+        width: 100px;
+      }
+      .two,.five {
+        width: 200px;
+      }
+      .six {
+        width: 300px;
+      } */
       .one {
         background: #19caad;
+        grid-column-start:2;
+        justify-self: right;
       }
       .two {
         background: #8cc7b5;
@@ -41,8 +63,19 @@
       .five {
         background: #e6ceac;
       }
+      
       .six {
         background: #ecad9e;
+        grid-column-start: span 2;/*这个属性还不会*/
+      }
+      .seven {
+        background: #389da2;
+      }
+      .eight {
+        background: #bd6425;
+      }
+      .nine {
+        background: #b41a46;
       }
     </style>
   </head>
@@ -54,6 +87,9 @@
       <div class="four item">Four</div>
       <div class="five item">Five</div>
       <div class="six item">Six</div>
+      <div class="seven item">seven</div>
+      <div class="eight item">eight</div>
+      <div class="nine item">nine</div>
     </div>
   </body>
 </html>

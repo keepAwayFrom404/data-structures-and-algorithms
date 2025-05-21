@@ -61,5 +61,32 @@ son21.skill.push(6)
 // console.log(son22);
 
 /**
- * 
+ * 组合继承：
+ * 优点：继承原型与构造函数属性和方法
+ * 缺点：构造函数的属性方法存在2份（原型中和构造函数中）
  */
+
+function Fan3() {
+  this.name = 'fan3'
+  this.skill = [1]
+}
+Fan3.prototype.say = function() {
+  console.log('i am fan3');
+}
+
+function Son3() {
+  Fan3.call(this)
+  this.type = 'son3'
+}
+
+Son3.prototype = new Fan3()
+Son3.prototype.see = function() {
+  console.log('i am son3 see');
+}
+
+const son31 = new Son3()
+const son32 = new Son3()
+son31.skill.push(6)
+// console.log(son31);
+// console.log(son32);
+

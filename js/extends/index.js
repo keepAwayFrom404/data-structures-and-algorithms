@@ -80,6 +80,7 @@ function Son3() {
 }
 
 Son3.prototype = new Fan3()
+Son3.constructor = Son3.prototype
 Son3.prototype.see = function() {
   console.log('i am son3 see');
 }
@@ -90,3 +91,122 @@ son31.skill.push(6)
 // console.log(son31);
 // console.log(son32);
 
+/**
+ * 原型式继承：对象的拷贝
+ * 优点：
+ * 缺点：只是对象的浅拷贝，引用类型cun存在覆盖
+ */
+function createObj(obj) {
+  function F(){}
+  F.prototype = obj // 将需要继承的对象绑定到函数的原型上
+  return new F() // 返回实力化后的对象，实例对象的原型指向obj
+}
+
+const temp = {
+  name: 'cadenli',
+  age: 18,
+  skill: [1],
+  say: function() {
+    console.log(`${this.name}:${this.age}`);
+  }
+}
+
+const obj1 = createObj(temp)
+const obj2 = createObj(temp)
+
+// console.log(obj1);
+// obj1.skill.push(2)
+// console.log(obj2.skill);
+
+/**
+ * 寄生式继承：在寄生继承的基础上增强对象能力
+ * 优点：可对父类对象进行扩展，可传递参数
+ * 缺点：传递参数不便，引用类型存在覆盖
+ */
+
+function createAnother(fan) {
+  const clone = createObj(fan)
+  clone.say = function() {
+    console.log(this.skill);
+  }
+  return clone
+}
+
+const obj3 = createAnother(temp)
+obj3.skill.push(1)
+// console.log(obj3);
+// const obj4 = createAnother(temp)
+// obj3.say()
+// console.log(obj4);
+
+/**
+ * 寄生式组合继承：当前大部分库的实现方案，也是class extends的实现；使用原型式继承原型属性和方法，绑定在原型上复用，使用构造函数继承实例属性和方法;
+ * 优点：只调用一次父类构造函数，继承的属性和方法不会出现2次，不会在子类创建多余的属性和方法，同时保持原型琏正确
+ */
+
+function Fan4(name) {
+  this.name = name
+  this.skill = [1]
+}
+
+Fan4.prototype.getSkill = function() {
+  console.log(this.skill);
+}
+
+function myCreate(a,b) { // 包装子类原型
+  b.prototype = createObj(a.prototype)
+  b.prototype.constructor = b
+}
+
+function Son4(name, age) {
+  Fan4.call(this, name)
+  this.age = age
+}
+
+myCreate(Fan4, Son4)
+
+Son4.prototype.say = function() {
+  console.log(`${this.name}:${this.age}`);
+}
+
+const son41 = new Son4('cadenli',18)
+son41.skill.push(7)
+const son42 = new Son4('lidan',8)
+// console.log(son41);
+// console.log(son42.say());
+
+/**
+ * 继承多个对象
+ */
+
+function Fanther1(name) {
+  this.name = name
+}
+Fanther1.prototype.sayName = function() {
+  console.log(this.name);
+}
+function Fanther2(age) {
+  this.age = age
+}
+Fanther1.prototype.sayAge = function() {
+  console.log(this.age);
+}
+function Son5(name, age) {
+  Fanther1.call(this, name)
+  Fanther1.call(this, age)
+  this.skill = [1]
+}
+
+Son5.prototype = Object.assign(Fanther1.prototype, Fanther2.prototype)
+Son5.prototype.constructor = Son5
+
+Son5.prototype.saySkill = function() {
+  console.log(this.name);
+}
+
+const son51 = new Son5('laoma', 57)
+son51.skill.push(2)
+const son52 = new Son5('qiaoqiao', 3)
+
+// console.log(son51);
+// console.log(son52);

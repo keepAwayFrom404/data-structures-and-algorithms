@@ -22,13 +22,33 @@ b.skill.push(7)
 const isAny = (v) => Object.prototype.toString.call(v)
 
 const deepClone = function(obj) {
-  
-  // 处理数组
-  // 处理函数
-  // 处理正则表达式
-  // 处理循环引用
-  // 基础值
+  // TODO: 处理循环引用
+  const res = Array.isArray(obj) ? [] : {}
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      const it = obj[key];
+      if(isAny(it).includes('Array') || isAny(it).includes('Object') ){ // 处理数组
+        res[key] = deepClone(obj[key])
+      } else if(isAny(it).includes('Function')) { // 处理正则表达式
+
+      } else if(isAny(it).includes('Function')) { // 处理函数
+        
+      } else { // 基础类型直接返回
+        res[key] = obj[key]
+      }
+    } 
+  }
+  return res
 }
+
+const a1 = [1,{b: 2, d: {
+  e: 3
+}}]
+
+const b1 = deepClone(a1)
+// b1[1].d.e = 4
+// console.log(b1,'b1');
+// console.log(a1);
 
 // const c = deepClone(a)
 // c.name = 'lidan'

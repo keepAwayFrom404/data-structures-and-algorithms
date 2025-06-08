@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="./pub-sub.js"></script>
+  
+  <div id="test">订阅1</div>
+  <div id="test1">订阅2</div>
+<div id="pub">发布</div>
+<script>
+  const subPub = new EventBus()
+  const sub1 = document.getElementById('test')
+  const sub2 = document.getElementById('test1')
+  const pub = document.getElementById('pub')
+  
+  sub1.onclick = function() {
+    console.log('sub1 sub====>');
+    subPub.on('ONE', function(value) {
+      console.log(value, '====>');
+    console.log('sub1 pub====>');
+    })
+  }
+  sub2.onclick = function() {
+    console.log('sub2 sub====>');
+    subPub.once('ONE', function(value) {
+      console.log(value, '====>');
+    console.log('sub2 pub====>');
+    })
+  }
+  pub.onclick = function() {
+    subPub.emit('ONE', {
+      name: 'cadenli',
+      age: 28
+    })
+    console.log('pub done====>');
+  }
+</script>
+</body>
+</html>

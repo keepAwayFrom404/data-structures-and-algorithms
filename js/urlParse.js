@@ -25,5 +25,3 @@ function urlParse(url = location.href) {
   return Object.assign(urlParamToObj2(search), urlParamToObj2(hashSearch))
 }
 console.log(urlParse(temp));
-
-console.log();

@@ -24,21 +24,45 @@ function debounce(fn, time, immedate = false) {
  * 常用场景：鼠标不断点击触发；滚动加载
  */
 
-function throttle(fn, time) {
-  let timer = null;
-  let last;
-  return function (args) {
-    const that = this;
-    let now = Date.now()
-    if(last && now < time + last) { // 还没到时间
+// function throttle(fn, time) {
+//   let timer = null;
+//   let last;
+//   return function (args) {
+//     const that = this;
+//     let now = Date.now()
+//     if(last && now < time + last) { // 还没到时间
+//       clearTimeout(timer)
+//       console.log('clear ===>');
+//       timer = setTimeout(() => {
+//         last = now
+//         fn(that, args)
+//       }, time);
+//     } else { // 到了时间，执行函数
+//       console.log('time done ===>');
+//       last = now
+//       fn(that, args)
+//     }
+//   };
+// }
+
+// 每间隔多少时间触发一次：比如滚动事件
+function throttle2(fn, time) {
+  let before = 0
+  let timer = null // 为了最后一次触发
+  return function(...args) {
+    const that = this
+    let after = Date.now()
+    if(after-before >= time) { // 执行一次
+      before = after
+      fn.call(that,...args)
+      console.log('触发了');
+    } else {
       clearTimeout(timer)
       timer = setTimeout(() => {
-        last = now
-        fn(that, args)
+        before = after
+        fn.call(that,...args)
+        console.log('我应该是最后一次触发了');
       }, time);
-    } else { // 到了时间，执行函数
-      last = now
-      fn(that, args)
     }
-  };
+  }
 }

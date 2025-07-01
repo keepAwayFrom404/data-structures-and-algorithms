@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./debounce-throttle.js"></script>
+  <style>
+    .img {
+      min-width: 100%;
+      min-height: 200px;
+      border: 1px solid red;
+    }
+  </style>
+</head>
+<body>
+  <div style="height: 800px;"></div>
+  <img class="img" data-src="https://picsum.photos/200/300"></img>
+  <img class="img" data-src="https://picsum.photos/200/350"></img>
+  <img class="img" data-src="https://picsum.photos/300/300"></img>
+  <img class="img" data-src="https://picsum.photos/200/200"></img>
+  <img class="img" data-src="https://picsum.photos/200/250"></img>
+  <img class="img" data-src="https://picsum.photos/200/270"></img>
+  <img class="img" data-src="https://picsum.photos/500/300"></img>
+  <img class="img" data-src="https://picsum.photos/400/300"></img>
+  <img class="img" data-src="https://picsum.photos/320/300"></img>
+  <img class="img" data-src="https://picsum.photos/210/300"></div>
+  <script>
+    const lazyLoad = (function() {
+      let imgs = [...document.querySelectorAll('img')]
+      const len = imgs.length
+      let count = 0
+      return function() {
+        const delImgs = []
+        console.log('done ===>');
+        for (let i=0;i< imgs.length;i++) {
+          const it = imgs[i]
+          
+          const rect = it.getBoundingClientRect()
+          console.log(rect.top , window.innerHeight);
+          if(rect.top < window.innerHeight) {
+            it.src = it.dataset.src
+            console.log(it.dataset.src, 'it.dataset.src ==>');
+            delImgs.push(i)
+            count++
+            if(count === len) window.removeEventListener('scroll', test)
+          }
+        }
+        imgs = imgs.filter((_, idx) => !delImgs.includes(idx))
+      }
+    })()
+
+    const test = throttle2(lazyLoad, 1000)
+    window.addEventListener('scroll', test)
+  </script>
+</body>
+</html>
